@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import consumers = require('node:stream/consumers');
 
 const app = express();
 const port = 3000;
@@ -8,12 +9,22 @@ const etudiants = [
 { id: 3, nom: "Doe", prenom: "John" },
 ];
 
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Bienvenue sur mon serveur API');
 });
 
 app.get('/api/data',(req: Request, res: Response) =>{
-    res.json(etudiants)
+    res.json(etudiants);
+});
+
+app.get('/api/hello/:name',(req: Request, res: Response) =>{
+    let name = req.params.name;
+    res.json({
+        message: `Bonjour ${name}`,
+        timestamp: new Date().toISOString();
+    });
+
 });
 
 app.listen(port, () => {
