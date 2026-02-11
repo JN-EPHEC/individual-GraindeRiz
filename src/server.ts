@@ -1,5 +1,7 @@
-import express, { Request, Response } from 'express';
-import consumers = require('node:stream/consumers');
+import express from 'express';
+import type { Request, Response } from 'express';
+import userRoutes from './routes/userRoutes.js';
+
 
 const app = express();
 const port = 3000;
@@ -9,6 +11,7 @@ const etudiants = [
 { id: 3, nom: "Doe", prenom: "John" },
 ];
 
+app.use('/api/users', userRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Bienvenue sur mon serveur API');
@@ -22,7 +25,7 @@ app.get('/api/hello/:name',(req: Request, res: Response) =>{
     let name = req.params.name;
     res.json({
         message: `Bonjour ${name}`,
-        timestamp: new Date().toISOString();
+        timestamp: new Date().toISOString()
     });
 
 });
@@ -31,10 +34,10 @@ app.listen(port, () => {
   console.log(`Serveur lancé sur http://localhost:${port}`);
 });
 
-function greet(name: string): string{
-    return `Salut c'est ${name}`;
+function greet(name: string): string {
+  return `Salut c'est ${name}`;
 }
 
-let message = greet("Greg")
+const message = greet('Greg');
 
-console.log(message)
+console.log(message);
