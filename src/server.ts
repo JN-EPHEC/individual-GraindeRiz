@@ -14,11 +14,16 @@ const etudiants = [
 async function startServer() {
   try {
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
+    await sequelize.sync();
+    console.log("Database connected.");
+
+    app.listen(port, () => {
+      console.log(`Server started on http://localhost:${port}.`);
+    });
   }
   catch (error){
-    console.error("Unable to connect to the database:", error)
-  }
+    console.error("Unable to connect to the database:", error);
+  };
 }
 
 startServer();
@@ -40,10 +45,6 @@ app.get('/api/hello/:name',(req: Request, res: Response) =>{
         timestamp: new Date().toISOString()
     });
 
-});
-
-app.listen(port, () => {
-  console.log(`Serveur lancé sur http://localhost:${port}`);
 });
 
 function greet(name: string): string {
