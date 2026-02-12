@@ -1,7 +1,7 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import userRoutes from './routes/userRoutes.js';
-
+import sequelize from './config/database.js';
 
 const app = express();
 const port = 3000;
@@ -10,6 +10,18 @@ const etudiants = [
 { id: 2, nom: "Martin", prenom: "Sophie" },
 { id: 3, nom: "Doe", prenom: "John" },
 ];
+
+async function startServer() {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+  }
+  catch (error){
+    console.error("Unable to connect to the database:", error)
+  }
+}
+
+startServer();
 
 app.use('/api/users', userRoutes);
 

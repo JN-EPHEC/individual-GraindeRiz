@@ -8,7 +8,7 @@ const users = [
 { id: 2, name: "Bob" },
 ];
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/users', (req: Request, res: Response) => {
   res.json(users);
 });
 
