@@ -27,8 +27,6 @@ async function startServer() {
   };
 }
 
-startServer();
-
 app.use('/api/users', userRoutes);
 
 app.get('/', (req: Request, res: Response) => {
@@ -55,3 +53,5 @@ function greet(name: string): string {
 const message = greet('Greg');
 
 console.log(message);
+
+startServer();
