@@ -30,9 +30,11 @@ app.use('/api/users', userRoutes);
 
 app.use('/api/students', studentRoutes);
 
-app.use('/', rootRoutes);
+//app.use('/', rootRoutes);
 
 app.use('/api/hello', nameRoutes);
+
+app.use('/',express.static('public'));
 
 
 
