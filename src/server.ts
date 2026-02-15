@@ -1,16 +1,14 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import userRoutes from './routes/userRoutes.js';
+import studentRoutes from './routes/studentRoutes.js';
+import rootRoutes from './routes/rootRoutes.js';
+import nameRoutes from './routes/nameRoutes.js'
 import sequelize from './config/database.js';
-import './models/User.js';
+
 
 const app = express();
 const port = 3000;
-const etudiants = [
-{ id: 1, nom: "Dupont", prenom: "Jean" },
-{ id: 2, nom: "Martin", prenom: "Sophie" },
-{ id: 3, nom: "Doe", prenom: "John" },
-];
 
 async function startServer() {
   try {
@@ -26,32 +24,16 @@ async function startServer() {
     console.error("Unable to connect to the database:", error);
   };
 }
+app.use(express.json());
 
 app.use('/api/users', userRoutes);
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Bienvenue sur mon serveur API');
-});
+app.use('/api/students', studentRoutes);
 
-app.get('/api/data',(req: Request, res: Response) =>{
-    res.json(etudiants);
-});
+app.use('/', rootRoutes);
 
-app.get('/api/hello/:name',(req: Request, res: Response) =>{
-    let name = req.params.name;
-    res.json({
-        message: `Bonjour ${name}`,
-        timestamp: new Date().toISOString()
-    });
+app.use('/api/hello', nameRoutes);
 
-});
 
-function greet(name: string): string {
-  return `Salut c'est ${name}`;
-}
-
-const message = greet('Greg');
-
-console.log(message);
 
 startServer();
