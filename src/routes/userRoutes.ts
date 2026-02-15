@@ -14,6 +14,7 @@ router.get('/', async (req: Request, res: Response) => {
 //POST /api/users
 router.post('/', async (req: Request, res: Response) => {
   const user = await User.create(req.body);
+  res.status(201).json(user);
 });
 
 //DELETE /api/users
