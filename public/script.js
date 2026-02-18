@@ -5,14 +5,33 @@ document.addEventListener('DOMContentLoaded', async function () {
     form.addEventListener('submit', onFormSubmit);
 });
 
+function showMessage(text, type = 'danger') {
+    const box = document.getElementById('messageBox');
+    box.textContent = text;
+    box.className = 'alert alert-' + type;
+}
+
+function clearMessage() {
+    const box = document.getElementById('messageBox');
+    box.textContent = '';
+    box.className = 'd-none';
+}
 
 async function loadUsers() {
+    clearMessage();
+
     const response = await fetch('/api/users');
+    if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        showMessage(data.error || data.erreur || 'Erreur lors du chargement des utilisateurs');
+        return;
+    }
+
     const users = await response.json();
 
     let html = '';
     for (let i = 0; i < users.length; i++) {
-        const user = users[i];
+        let user = users[i];
         html +=
             '<li>' +
             user.firstName + ' ' + user.lastName +
@@ -25,11 +44,12 @@ async function loadUsers() {
 
 async function onFormSubmit(event) {
     event.preventDefault();
+    clearMessage();
 
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
 
-    await fetch('/api/users', {
+    const response = await fetch('/api/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -40,17 +60,34 @@ async function onFormSubmit(event) {
         })
     });
 
+    if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        showMessage(data.error || data.erreur || 'Erreur pendant la creation');
+        return;
+    }
+
+    showMessage('Utilisateur ajoute', 'success');
     document.getElementById('userForm').reset();
-    await loadUsers(); // rafraichit la liste sans reload
+    // rafraichit la liste sans reload
+    await loadUsers();
 }
 
 async function deleteUser(id) {
-  await fetch('/api/users/' + id, {
+  clearMessage();
+
+  const response = await fetch('/api/users/' + id, {
     method: 'DELETE'
   });
 
-  await loadUsers(); // recharge la liste
+  if (!response.ok && response.status !== 204) {
+    const data = await response.json().catch(() => ({}));
+    showMessage(data.error || data.erreur || 'Erreur pendant la suppression');
+    return;
+  }
+
+  showMessage('Utilisateur supprime', 'success');
+  // recharge la liste    
+  await loadUsers(); 
 }
 
 window.deleteUser = deleteUser;
-

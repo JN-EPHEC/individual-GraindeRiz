@@ -1,35 +1,32 @@
 <!doctype html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accueil API</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Users API</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<body class="container py-4">
+  <h1 class="mb-4">Gestion des utilisateurs</h1>
 
-<body>
-    <main>
-        <h1>Bienvenue sur mon API</h1>
-        <form id="userForm" action="/api/users" method="post">
-            <div class="row g-2">
-                <div class="col">
-                    <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Prénom"
-                        required />
-                </div>
-                <div class="col">
-                    <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Nom" required />
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-2">Ajouter</button>
-            <ul id="usersList"></ul>
-        </form>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-    <script src="/script.js"></script>
+  <p id="messageBox" class="alert d-none"></p>
+
+  <form id="userForm" class="card p-3 mb-4">
+    <h2 class="h5 mb-3">Ajouter un utilisateur</h2>
+
+    <label for="firstName" class="form-label">Prénom</label>
+    <input type="text" id="firstName" class="form-control mb-3" required />
+
+    <label for="lastName" class="form-label">Nom</label>
+    <input type="text" id="lastName" class="form-control mb-3" required />
+
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+  </form>
+
+  <h2 class="h5">Liste des utilisateurs</h2>
+  <ul id="usersList" class="list-group"></ul>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/script.js"></script>
 </body>
-
 </html>
