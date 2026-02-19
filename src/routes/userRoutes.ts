@@ -1,19 +1,62 @@
 import express from 'express';
-import type { Request, Response } from 'express';
-import User from '../models/User.js';
 import * as userControllers from '../controllers/userControllers.js'
 
 
 const router = express.Router();
 
-//GET /api/users
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Récupère la liste des utilisateurs
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Succès
+ */
 router.get('/', userControllers.getAllUsers);
 
-//POST /api/users
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Crée un utilisateur
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Utilisateur créé
+ */
 router.post('/', userControllers.createUser);
 
-//DELETE /api/users
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Supprime un utilisateur par son ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Utilisateur supprimé
+ *       404:
+ *         description: Utilisateur introuvable
+ */
 router.delete('/:id', userControllers.deleteUser);
 
 export default router;
-

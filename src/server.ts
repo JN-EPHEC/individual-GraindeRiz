@@ -7,6 +7,8 @@ import nameRoutes from './routes/nameRoutes.js'
 import sequelize from './config/database.js';
 import { requestLogger } from './middlewares/loggers.js';
 import { errorSender } from "./middlewares/errorHandlers.js";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.js";
 
 
 
@@ -27,6 +29,8 @@ async function startServer() {
     console.error("Unable to connect to the database:", error);
   };
 }
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use(express.json());
 
 app.use(requestLogger)
