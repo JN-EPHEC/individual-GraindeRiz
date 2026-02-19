@@ -6,6 +6,8 @@
   "author": "",
   "type": "module",
   "main": "index.js",
+  "moduleResolution": "node",
+  "allowSyntheticDefaultImports": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsx src/server.ts"

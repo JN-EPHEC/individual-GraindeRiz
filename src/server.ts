@@ -5,6 +5,9 @@ import studentRoutes from './routes/studentRoutes.js';
 import rootRoutes from './routes/rootRoutes.js';
 import nameRoutes from './routes/nameRoutes.js'
 import sequelize from './config/database.js';
+import { requestLogger } from './middlewares/loggers.js';
+import { errorSender } from "./middlewares/errorHandlers.js";
+
 
 
 const app = express();
@@ -26,6 +29,8 @@ async function startServer() {
 }
 app.use(express.json());
 
+app.use(requestLogger)
+
 app.use('/api/users', userRoutes);
 
 app.use('/api/students', studentRoutes);
@@ -36,6 +41,6 @@ app.use('/api/hello', nameRoutes);
 
 app.use('/',express.static('public'));
 
-
+app.use(errorSender);
 
 startServer();
